@@ -1,0 +1,44 @@
+stages:
+  - test
+{% if cookiecutter.travis_release == "true" %}
+  - name: release
+    if: branch = master AND type != pull_request
+{% endif %}
+{% if cookiecutter.travis_build == "true" %}
+  - name: build
+    if: branch = master AND type != pull_request
+{% endif %}
+
+jobs:
+  include:
+    - stage: test
+      language: go
+      go: 'release'
+      before_install:
+        - cd ./{{ cookiecutter.project_name }}
+      script:
+        - make test
+    {% if cookiecutter.travis_release == "true" %}
+    - stage: release
+      language: node_js
+      install:
+        - . $HOME/.nvm/nvm.sh
+        - nvm install stable
+        - nvm use stable
+        - npm install @semantic-release/changelog && npm install @semantic-release/git
+      script:
+        - npx semantic-release
+    {% endif %}
+    {% if cookiecutter.travis_build == "true" %}
+    - stage: build
+      language: go
+      go: 'release'
+      script:
+        - go get github.com/mitchellh/gox
+        - go get github.com/tcnksm/ghr
+        - cd ./{{ cookiecutter.project_name }}
+        {% raw %}
+        - gox -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"
+        {% endraw %}
+        - ghr --username {{ cookiecutter.github_username }} --token $GITHUB_TOKEN --replace --debug $(git describe --abbrev=0 --tags) dist/
+    {% endif %}

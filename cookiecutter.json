@@ -1,5 +1,9 @@
 {
     "project_name": "my-go-project",
+    "travis_enable": "true",
+    "travis_release": "false",
+    "travis_build": "false",
+    "github_username": "cookiemonster",
     "author": "Cookie Monster",
     "license": "MIT"
 }
