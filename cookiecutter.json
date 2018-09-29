@@ -1,3 +1,5 @@
 {
-    "project_name": "my-go-project"
+    "project_name": "my-go-project",
+    "author": "Cookie Monster",
+    "license": "MIT"
 }
