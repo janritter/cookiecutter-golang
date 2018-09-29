@@ -13,9 +13,7 @@ jobs:
   include:
     - stage: test
       language: go
-      go: 'release'
-      before_install:
-        - cd ./{{ cookiecutter.project_name }}
+      go: 'stable'
       script:
         - make test
     {% if cookiecutter.travis_release == "true" %}
@@ -32,13 +30,15 @@ jobs:
     {% if cookiecutter.travis_build == "true" %}
     - stage: build
       language: go
-      go: 'release'
+      go: 'stable'
+      before_script:
+        # Use latest master version, which includes the git tag from the release step
+        - git checkout master
       script:
         - go get github.com/mitchellh/gox
         - go get github.com/tcnksm/ghr
-        - cd ./{{ cookiecutter.project_name }}
         {% raw %}
         - gox -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"
         {% endraw %}
-        - ghr --username {{ cookiecutter.github_username }} --token $GITHUB_TOKEN --replace --debug $(git describe --abbrev=0 --tags) dist/
+        - ghr --username {{ cookiecutter.github_username }} --token $GITHUB_TOKEN --replace $(git describe --abbrev=0 --tags) dist/
     {% endif %}
