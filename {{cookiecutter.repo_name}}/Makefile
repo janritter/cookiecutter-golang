@@ -5,7 +5,7 @@ prepare:
 build: prepare
 	go build -o ./bin/{{cookiecutter.repo_name}} -v
 
-test:
+tests:
 	go test ./... -v
 
 run:
