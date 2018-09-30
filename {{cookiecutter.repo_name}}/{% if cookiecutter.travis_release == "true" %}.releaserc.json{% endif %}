@@ -16,7 +16,7 @@
         "@semantic-release/github",
         {
             "path": "semantic-release",
-            "name": "{{ cookiecutter.github_username }}/{{ cookiecutter.project_name}}"
+            "name": "{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name}}"
         }
     ],
     "tagFormat": "${version}"

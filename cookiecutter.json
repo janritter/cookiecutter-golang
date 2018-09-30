@@ -1,5 +1,5 @@
 {
-    "project_name": "my-go-project",
+    "repo_name": "go-my-project",
     "travis_enable": "true",
     "travis_release": "false",
     "travis_build": "false",

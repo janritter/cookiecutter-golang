@@ -1,4 +1,4 @@
-# {{ cookiecutter.project_name | title | replace("-", " ") }}
+# {{ cookiecutter.repo_name | replace("go", "") | title | replace("-", " ") }}
 
 ## Usage
 
