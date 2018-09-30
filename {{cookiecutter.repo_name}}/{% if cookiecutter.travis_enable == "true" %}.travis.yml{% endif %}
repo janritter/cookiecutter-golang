@@ -15,7 +15,7 @@ jobs:
       language: go
       go: 'stable'
       script:
-        - make test
+        - make tests
     {% if cookiecutter.travis_release == "true" %}
     - stage: release
       language: node_js
